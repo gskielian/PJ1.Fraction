@@ -103,7 +103,7 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
 	public void switchSign()
 	{
 		// implement this method!
-		this.num = -this.num;
+		num = -num;
 	}	// change setSign
 
 	public FractionInterface add(FractionInterface secondFraction)
@@ -173,7 +173,7 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
 	{
 		// implement this method!
                Fraction otherFraction = (Fraction) that;
-               return this.num * otherFraction.getDenominator() == otherFraction.getNumerator() * this.den;
+               return num * otherFraction.getDenominator() == otherFraction.getNumerator() * den;
         } // end equals
 
 
@@ -186,7 +186,7 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
                 if (this.equals(that)) {
                  return 0;
                 }
-                else if (this.num * that.getDenominator() > that.getNumerator() * this.den) {
+                else if (num * that.getDenominator() > that.getNumerator() * den) {
                   return 1;
                 }
                 else {
@@ -199,7 +199,7 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
 	
 	public String toString()
 	{
-		return this.num + "/" + this.den;
+		return num + "/" + den;
 	} // end toString
 
 
