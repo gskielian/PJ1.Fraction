@@ -51,165 +51,156 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
 
 	public Fraction(int numerator, int denominator)
 	{
-		
-        setFraction(numerator, denominator);
-        // implement this method!
+                
+                num = numerator;
+                den = denominator;
+                this.reduceToLowestTerms();
+		setFraction(num, den);
 	}	// end constructor
 
 	public void setFraction(int numerator, int denominator)
 	{
-        if( denominator == 0) {
-            throw new ArithmeticException("setFractions throws error");
-        }
-        else if(denominator < 0){
-            denominator*=-1; //Forced denominator to be positive.
-            numerator = -1*numerator;
-        } else {
-            this.num = numerator;
-            this.den = denominator;
-        }
 		// return ArithmeticException if initialDenominator is 0
-		// implement this method!
+		if (denominator == 0) {
+                  throw new ArithmeticException("denominator is less than zero.");
+                }
+                else if (denominator < 0 && numerator >= 0) {
+                 
+                  num = -numerator;
+                  den = -denominator;
+                  // this.reduceToLowestTerms();
+                }
+                else {
+                  num = numerator;
+                  den = denominator;
+                 // this.reduceToLowestTerms();
+                }
+
 	}	// end setFraction
 
 	public int getNumerator()
 	{
 		// implement this method!
-		return this.num;
+		return num;
 	}	// end getNumerator
-
 
 	public int getDenominator()
 	{
 		// implement this method!
-		return this.den;
+		return den;
 	}	// end getDenominator
 
 	public char getSign()
 	{
-		// implement this method!
-        if (this.num < 0){
-            return '-';
-        } else {
-            return '+';
-        }
+                if (num * den < 0) {
+                  return '-';
+                }
+                else {
+                  return '+';
+                }
 	}	// end getSign
 
 	public void switchSign()
 	{
 		// implement this method!
-		num = -this.num;
+		num = -num;
 	}	// change setSign
 
 	public FractionInterface add(FractionInterface secondFraction)
 	{
 		// a/b + c/d is (ad + cb)/(bd)
-        int a, b, c, d;
-        a = this.num;
-        b = this.den;
-        c = secondFraction.getNumerator();
-        d = secondFraction.getDenominator();
+		
+                int a, b, c, d;
+                a = num;
+                b = den;
+                c = secondFraction.getNumerator();
+                d = secondFraction.getDenominator();
 
-        FractionInterface sumFraction = new Fraction(a*d + c*b, b*d); 
-		// implement this method!
-		return sumFraction;
-	}	// end add
+                FractionInterface sumFraction = new Fraction(a*d + b*c, b*d);
+                return sumFraction;
+        }	// end add
 
 	public FractionInterface subtract(FractionInterface secondFraction)
 	{
-        //a/b - c/d is (ad - cb)/(bd)
-        int a, b, c, d;
-        a = this.num;
-        b = this.den;
-        c = secondFraction.getNumerator();
-        d = secondFraction.getDenominator();
+		// a/b - c/d is (ad - cb)/(bd)
+	        int a, b, c, d;
+                a = num;
+                b = den;
+                c = secondFraction.getNumerator();
+                d = secondFraction.getDenominator();
 
-        FractionInterface differenceFraction = new Fraction(a*d - c*b, b*d); 
-		// implement this method!
-		return differenceFraction;
-	}	// end subtract
+                FractionInterface subFraction = new Fraction(a*d - b*c, b*d);
+                return subFraction;
+		 
+        }	// end subtract
 
 	public FractionInterface multiply(FractionInterface secondFraction)
 	{
 		// a/b * c/d is (ac)/(bd)
-        int a, b, c, d;
-        a = this.num;
-        b = this.den;
-        c = secondFraction.getNumerator();
-        d = secondFraction.getDenominator();
+		int a, b, c, d;
+                a = num;
+                b = den;
+                c = secondFraction.getNumerator();
+                d = secondFraction.getDenominator();
 
-        FractionInterface multiFraction = new Fraction(a*c, b*d); 
-		// implement this method!
-		return multiFraction;
-        //end multiply
-    }
+                FractionInterface mulFraction = new Fraction(a*c, b*d);
+                return mulFraction;
+        }	// end multiply
 
 	public FractionInterface divide(FractionInterface secondFraction)
 	{
 		// return ArithmeticException if secondFraction is 0
-        if(secondFraction.getNumerator() == 0){
-            throw new ArithmeticException();
-        }
-        //a/b / c/d is (ad)/(bc)
-        int a, b, c, d;
-        a = this.num;
-        b = this.den;
-        c = secondFraction.getNumerator();
-        d = secondFraction.getDenominator();
-
-        FractionInterface divFraction = new Fraction(a*d, b*c); 
+		// a/b / c/d is (ad)/(bc)
 		// implement this method!
-		return divFraction;
-
+		return this.multiply(secondFraction.getReciprocal());
 	}	// end divide
 
 	public FractionInterface getReciprocal() 
 	{
 		// return ArithmeticException if secondFraction is 0
 		// implement this method!
-        if(this.num == 0){
-            throw new ArithmeticException();
-        }
-
-        FractionInterface RecipFraction = new Fraction(this.den, this.num); 
-        // implement this method!
-    	return RecipFraction;
+                if (this.getDenominator() == 0) {
+                  throw new ArithmeticException();
+                }
+                else {
+                  FractionInterface recipFraction = new Fraction(den, num);
+                  return recipFraction;
+                }
 	} // end getReciprocal
 
 
-	public boolean equals(Object other)
+	public boolean equals(Object that)
 	{
-        Fraction otherFraction = (Fraction) other; //downcasting
-        if (this.num * otherFraction.getDenominator() > otherFraction.getNumerator() * this.den){ 
-            return true;
-        } else{
-
 		// implement this method!
-		return false;
-        }
+               Fraction otherFraction = (Fraction) that;
+               return num * otherFraction.getDenominator() == 
+                 otherFraction.getNumerator() * den;
 	} // end equals
 
 
-	public int compareTo(Fraction other)
+	public int compareTo(Fraction that)
 	{
-        this.reduceToLowestTerms();
-        other.reduceToLowestTerms();
-
-        if (this.equals(other)){
-            return 0;
-        } else if (this.num * other.getDenominator() > other.getNumerator() * this.den){ 
-              return 1;
-        }
-          else{
-              return -1;
-          }
 		// implement this method!
+		// this.reduceToLowestTerms();
+                // that.reduceToLowestTerms();
+                
+                if (this.equals(that)) {
+                 return 0;
+                }
+                else if (num * that.getDenominator() > that.getNumerator() * den) {
+                  return 1;
+                }
+                else {
+                  return -1;
+                }
+                
+                
 	} // end compareTo
+
 	
 	public String toString()
 	{
-        this.reduceToLowestTerms();
-		return this.num + "/" + this.den;
+		return num + "/" + den;
 	} // end toString
 
 
@@ -228,14 +219,24 @@ public class Fraction implements FractionInterface, Comparable<Fraction>
                 //   greatestCommonDivisor works for + numbers.
                 //   So, you should eliminate - sign
                 // then reduce numbers : num/GCD and den/GCD
-                int gcd;
+                int g;
+                // if (num < 0 ) {
 
-                if (this.num < 0)
-                    gcd = greatestCommonDivisor(-this.num, this.den);
-                else 
-                    gcd = greatestCommonDivisor(this.num, this.den);
-                this.num = this.num/gcd;
-                this.den = this.den/gcd;
+                //   g = greatestCommonDivisor(-num, den);
+
+                // }
+                // else {
+                //   g = greatestCommonDivisor(num, den);
+                // }
+                g = greatestCommonDivisor(num, den);
+
+                num = num / g;
+                den = den / g;
+                
+
+                
+
+
 	}	// end reduceToLowestTerms
 
   	/** Task: Computes the greatest common secondFraction of two integers.
